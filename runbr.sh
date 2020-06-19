@@ -17,3 +17,16 @@ LASTPID=$!
 echo $LASTPID >> $SCRIPT_DIR/pid/config
 echo -e "\nStarted config service with PID $LASTPID"
 sleep 10
+
+# Start discovery service
+echo -e "\nStopping discovery service."
+touch $SCRIPT_DIR/pid/discovery
+kill -9 $(cat $SCRIPT_DIR/pid/discovery)
+>$SCRIPT_DIR/pid/discovery
+
+echo -e "\nStarting discovery service with profile $PROFILE"
+nohup java -jar $SRC_DIR/discovery/target/discovery*.jar --spring.profiles.active=$PROFILE &
+LASTPID=$!
+echo $LASTPID >> $SCRIPT_DIR/pid/discovery
+echo -e "\nStarted discovery service with PID $LASTPID"
+sleep 10

@@ -14,5 +14,10 @@ pushd $SRC_DIR/discovery
     mvn clean package
 popd
 
+echo -e "\nBuild gateway server"
+pushd $SRC_DIR/gateway
+    mvn clean package
+popd
+
 # Run all services
 . $SCRIPT_DIR/runbr.sh $PROFILE

@@ -30,3 +30,16 @@ LASTPID=$!
 echo $LASTPID >> $SCRIPT_DIR/pid/discovery
 echo -e "\nStarted discovery service with PID $LASTPID"
 sleep 10
+
+# Start gateway service
+echo -e "\nStopping gateway service."
+touch $SCRIPT_DIR/pid/gateway
+kill -9 $(cat $SCRIPT_DIR/pid/gateway)
+>$SCRIPT_DIR/pid/gateway
+
+echo -e "\nStarting gateway service with profile $PROFILE"
+nohup java -jar $SRC_DIR/gateway/target/gateway*.jar --spring.profiles.active=$PROFILE &
+LASTPID=$!
+echo $LASTPID >> $SCRIPT_DIR/pid/gateway
+echo -e "\nStarted gateway service with PID $LASTPID"
+sleep 10
